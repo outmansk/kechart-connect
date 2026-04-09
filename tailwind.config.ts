@@ -73,6 +73,7 @@ export default {
       boxShadow: {
         subtle: "var(--shadow-subtle)",
         glass: "var(--shadow-glass)",
+        elevated: "var(--shadow-elevated)",
       },
       keyframes: {
         "accordion-down": {

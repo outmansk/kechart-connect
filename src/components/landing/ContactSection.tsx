@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
-import { Send } from 'lucide-react';
+import { Send, MapPin, Mail as MailIcon } from 'lucide-react';
 
 export default function ContactSection() {
   const [form, setForm] = useState({ nom: '', email: '', message: '' });
@@ -31,29 +31,90 @@ export default function ContactSection() {
     }
   };
 
-  const inputClass = "w-full border border-primary/20 rounded-xl px-4 py-3 text-sm bg-white text-foreground placeholder:text-foreground-secondary/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition";
+  const inputClass = "w-full border border-border rounded-xl px-4 py-3.5 text-sm bg-background text-foreground placeholder:text-foreground-secondary/40 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 transition-all duration-200";
 
   return (
     <section id="contact" className="section-padding">
-      <div className="container max-w-lg">
-        <motion.div ref={ref} initial={{ opacity: 0, y: 40 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
-          <p className="text-xs tracking-[0.15em] font-medium text-primary mb-3 text-center">CONTACT</p>
-          <h2 className="text-3xl font-bold text-foreground text-center mb-2">Contactez-nous</h2>
-          <p className="text-sm text-foreground-secondary text-center mb-8">Une question, une idée ? Écrivez-nous.</p>
+      <div className="container">
+        <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            {/* Left text */}
+            <div className="lg:pt-4">
+              <p className="text-xs tracking-[0.2em] font-semibold text-primary mb-3 uppercase">Contact</p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">Contactez-nous</h2>
+              <p className="text-foreground-secondary mb-8 leading-relaxed">
+                Une question, une idée ou envie de collaborer ? N'hésitez pas à nous écrire, nous vous répondrons dans les meilleurs délais.
+              </p>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input placeholder="Nom" className={inputClass} value={form.nom} onChange={(e) => setForm({ ...form, nom: e.target.value })} />
-            <input type="email" placeholder="Email" className={inputClass} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-            <textarea placeholder="Message" rows={4} className={inputClass} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} />
-            <motion.button
-              whileHover={{ y: -2 }}
-              type="submit"
-              disabled={loading}
-              className="w-full bg-primary text-primary-foreground font-semibold rounded-xl py-3.5 hover:bg-primary-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              {loading ? 'Envoi...' : <><Send size={16} /> Envoyer</>}
-            </motion.button>
-          </form>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <MailIcon size={18} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Email</p>
+                    <p className="text-sm text-foreground-secondary">contact@kechart.org</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <MapPin size={18} className="text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Adresse</p>
+                    <p className="text-sm text-foreground-secondary">Marrakech, Maroc</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right form */}
+            <div className="glass-card p-8">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label htmlFor="contact-nom" className="block text-sm font-medium text-foreground mb-1.5">Nom</label>
+                  <input
+                    id="contact-nom"
+                    placeholder="Votre nom complet"
+                    className={inputClass}
+                    value={form.nom}
+                    onChange={(e) => setForm({ ...form, nom: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-1.5">Email</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    placeholder="votre@email.com"
+                    className={inputClass}
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-1.5">Message</label>
+                  <textarea
+                    id="contact-message"
+                    placeholder="Écrivez votre message ici..."
+                    rows={4}
+                    className={inputClass + ' resize-none'}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  />
+                </div>
+                <motion.button
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-primary text-primary-foreground font-semibold rounded-xl py-3.5 hover:bg-primary-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
+                >
+                  {loading ? 'Envoi en cours...' : <><Send size={15} /> Envoyer le message</>}
+                </motion.button>
+              </form>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
