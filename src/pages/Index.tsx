@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import Header from '@/components/landing/Header';
 import Hero from '@/components/landing/Hero';
-import ImpactCounters from '@/components/landing/ImpactCounters';
+import AboutSection from '@/components/landing/AboutSection';
+import AtaaSection from '@/components/landing/AtaaSection';
+import EditionsSection from '@/components/landing/EditionsSection';
 import ProjectsSection from '@/components/landing/ProjectsSection';
+import PartenariatSection from '@/components/landing/PartenariatSection';
 import CollaborateursSection from '@/components/landing/CollaborateursSection';
 import ContactSection from '@/components/landing/ContactSection';
 import SocialCTA from '@/components/landing/SocialCTA';
@@ -12,12 +15,19 @@ import VolunteerModal from '@/components/landing/VolunteerModal';
 export default function Index() {
   const [volunteerOpen, setVolunteerOpen] = useState(false);
 
+  const scrollToContact = () => {
+    document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <>
       <Header />
       <Hero onVolunteer={() => setVolunteerOpen(true)} />
-      <ImpactCounters />
+      <AboutSection />
+      <AtaaSection />
+      <EditionsSection />
       <ProjectsSection />
+      <PartenariatSection onContact={scrollToContact} />
       <CollaborateursSection />
       <ContactSection />
       <SocialCTA />
