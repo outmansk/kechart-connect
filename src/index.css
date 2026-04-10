@@ -158,3 +158,23 @@
   background: hsl(var(--primary) / 0.15);
   color: hsl(var(--foreground));
 }
+
+/* Hero logo floating animation */
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.hero-logo-float {
+  animation: hero-float 4s ease-in-out infinite;
+}
+
+/* Glow animation for decorative elements */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
